@@ -60,7 +60,7 @@ public class AnimalMonitor
     {
         makeAnimalSet();
         for (String s : animalSet) {
-            int num = getTotalCount(s);
+            int num = getCount(s);
             if (num < threshold) {
                 System.out.println(s + " : " + num);
             }
@@ -78,18 +78,6 @@ public class AnimalMonitor
                         .forEach(s->animalSet.add(s));
         /*animalSet.stream()
                     .forEach(s->System.out.println(s));*/
-    }
-    /**
-     * getTotalCount returns total sited for an animal
-     * @param animal
-     * @return int
-     */
-    public int getTotalCount(String animal)
-    {
-        return sightings.stream()
-                        .filter(s->animal.equals(s.getAnimal()))
-                        .map(s->s.getCount())
-                        .reduce(0,(total,s)->  total + s);
     }
     /**
      * printSightingsAnimalCount prints count in each sighting of a particular animal
@@ -156,13 +144,21 @@ public class AnimalMonitor
      */
     public int getCount(String animal)
     {
-        int count = 0;
+        return sightings.stream()
+                        .filter(s->animal.equals(s.getAnimal()))
+                        .map(s->s.getCount())
+                        .reduce(0, (total, count) ->total + count);
+        /*int count = 0;
         for (Sighting sighting : sightings){
             if (sighting.getAnimal().equals(animal)) {
                 count++;
             }
-        }
-        return count;
+            return sightings.stream()
+                        .filter(s->animal.equals(s.getAnimal()))
+                        .map(s->s.getCount())
+                        .reduce(0,(total,s)->  total + s);
+        }*/
+        
     }
     /**
      * removeZeroCounts removes sightings where animal count was zero.
