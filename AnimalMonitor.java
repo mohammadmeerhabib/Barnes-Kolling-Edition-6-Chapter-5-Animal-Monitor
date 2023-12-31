@@ -59,12 +59,15 @@ public class AnimalMonitor
     public void printEndangered(int threshold)
     {
         makeAnimalSet();
-        for (String s : animalSet) {
+        animalSet.stream()
+                        .filter(s->threshold > getCount(s))
+                        .forEach(System.out::println);
+        /*for (String s : animalSet) {
             int num = getCount(s);
             if (num < threshold) {
                 System.out.println(s + " : " + num);
             }
-        }
+        }*/
     }
     /**
      * makeAnimalSet makes an set of all animals seen
